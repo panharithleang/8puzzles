@@ -64,7 +64,8 @@ class Node:
       for d in l:
         x1, y1 = self.find_in_goal(d)
         x2, y2 = self.find_empty(d)
-        total_hvalue += (math.pow((x1 - x2),2) + math.pow((y1 - y2),2))
+        total_hvalue += abs(x1 - x2) + abs(y1-y2)
+        # total_hvalue += (math.pow((x1 - x2),2) + math.pow((y1 - y2),2))
     return total_hvalue
   
   def is_goal(self):

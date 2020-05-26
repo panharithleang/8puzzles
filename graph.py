@@ -33,6 +33,34 @@ class Graph:
           self.node_list.append(new_node)
       opened.remove(selected)
   
+  def id_a_star(self):
+    opened = []
+    opened.append(Node(self.start, self.goal, 0, None))
+    self.node_list.append(Node(self.start, self.goal, 0, None))
+    while (len(opened) > 0):
+      selected =  min(opened, key=lambda n: n.fvalue)
+      selected.checked = True
+      if selected.is_goal():
+        print('Finished')
+        self.backtrack(selected)
+        return
+      if (selected.gvalue < 31):
+        children = selected.generate_children()      
+        for child in children:
+          if (child in [n.data for n in self.node_list]):
+            index = [n.data for n in self.node_list].index(child)
+            child_node = self.node_list[index]
+            if(child_node.gvalue > selected.gvalue + 1):
+              child_node.gvalue = selected.gvalue + 1
+              child_node.parent = selected
+            if(child_node.checked):
+              continue            
+          else:
+            new_node = Node(child, self.goal, selected.gvalue + 1, selected)
+            opened.append(new_node)
+            self.node_list.append(new_node)
+      opened.remove(selected)
+  
   def bfs(self):
     opened = []
     opened.append(Node(self.start, self.goal, 0, None))
@@ -60,34 +88,7 @@ class Graph:
           self.node_list.append(new_node)
       opened.remove(selected)
     
-  def id_dfs(self):
-    opened = []
-    opened.append(Node(self.start, self.goal, 0, None))
-    self.node_list.append(Node(self.start, self.goal, 0, None))
-    while (len(opened) > 0):
-      selected = opened[-1]
-      selected.checked = True
-      if selected.is_goal():
-        print('Finished')
-        self.backtrack(selected)
-        return
-      if (selected.gvalue < 31):
-        children = selected.generate_children()      
-        for child in children:
-          if (child in [n.data for n in self.node_list]):
-            index = [n.data for n in self.node_list].index(child)
-            child_node = self.node_list[index]
-            if(child_node.gvalue > selected.gvalue + 1):
-              child_node.gvalue = selected.gvalue + 1
-              child_node.parent = selected
-            if(child_node.checked):
-              continue            
-          else:
-            new_node = Node(child, self.goal, selected.gvalue + 1, selected)
-            opened.append(new_node)
-            self.node_list.append(new_node)
-      opened.remove(selected)
-    
+  
   def backtrack(self, goal):
     route = []
     current = goal

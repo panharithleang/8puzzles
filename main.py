@@ -3,11 +3,13 @@ from graph import Graph
 from time import time
 
 def main():
+  # 9 moves
   start = [
     [1, 8, 2],
     ['x', 4, 3],
     [7, 6, 5]
   ]
+  # 31 moves
   start = [
     [8, 6, 7],
     [2, 5, 4],
@@ -24,6 +26,7 @@ def main():
   if graph1.is_solvable():
     # graph1.id_dfs()
     # graph1.bfs()
+    # graph1.id_a_star()
     graph1.a_star()
     end_time = time()
     print(f'finished in {end_time-start_time} s')
